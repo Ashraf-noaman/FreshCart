@@ -2,12 +2,14 @@
 import { addProductCart } from "@/actions/cart.action";
 import { Button } from "@base-ui/react";
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "sonner";
-import { set } from "zod";
 import { Spinner } from "../ui/spinner";
+import { CartContext } from "@/provider/cart-provider";
+import { redirect } from "next/navigation";
 
 export default function AddToCartBtn({ productId }: { productId: string }) {
+  const { getCartData } = useContext(CartContext);
     const [isLoading, setIsLoading] = useState(false);
 
 
@@ -18,8 +20,10 @@ export default function AddToCartBtn({ productId }: { productId: string }) {
         setIsLoading(true);
       const response = await addProductCart(productId);
       toast.success(response.message);
+      getCartData();
     } catch (error) {
       toast.error((error as Error).message);
+      redirect("/login");
     }
     finally{
     setIsLoading(false);

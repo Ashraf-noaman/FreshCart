@@ -26,6 +26,9 @@ export const registerSchema = z.object({
  phone: z.string()
  .nonempty("Phone Required")
 .regex(/^01[0125][0-9]{8}$/),
+terms: z.boolean().refine((val) => val === true, {
+  message: "You must accept Terms & Privacy Policy",
+}),
 }).refine((data)=>data.password === data.rePassword,{
   path:["rePassword"],
   error:"Password does not match"
@@ -44,6 +47,7 @@ export const loginSchema = z.object({
  .min(7,"Min is 7 Chars"),
    
 })
+
 
 
 

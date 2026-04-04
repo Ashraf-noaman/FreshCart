@@ -6,10 +6,8 @@ import Footer from "@/components/commons/footer";
 import { Exo } from "next/font/google";
 import { Toaster } from "sonner";
 import AuthProvider from "@/provider/auth-provider";
-import { Provider } from "react-redux";
-import { store } from "@/components/store/store";
-import { ReduxProvider } from '@/components/store/ReduxProvider';
-
+import CartContextProvider from "@/provider/cart-provider";
+import WishListContextProvider from "@/provider/wish-provider";
 
 const exo = Exo({
   subsets: ["latin"],
@@ -46,12 +44,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${exo.className} antialiased`}
       >
         <AuthProvider>
-          <ReduxProvider>
-            <Navbar />
-            {children}
-            <Footer />
-            <Toaster position="top-center" richColors />
-          </ReduxProvider>
+          <CartContextProvider>
+            <WishListContextProvider>
+              <Navbar />
+              {children}
+              <Footer />
+              <Toaster position="top-center" richColors />
+            </WishListContextProvider>
+          </CartContextProvider>
         </AuthProvider>
       </body>
     </html>

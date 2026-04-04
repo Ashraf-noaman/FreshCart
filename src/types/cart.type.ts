@@ -3,6 +3,7 @@ export interface CartI{
     message : string;
     numOfCartItems : number;
     data : CartDataI;
+    cartId : string;
 }
 export interface CartDataI{
     _id: string;
@@ -49,4 +50,11 @@ export interface subcategoryI{
     slug: string;
     category:string;
 }
+export interface ShippDAtaI{
+    details: string;
+    phone: string;
+    city: string;
+    postalCode: string;
+}
+
 

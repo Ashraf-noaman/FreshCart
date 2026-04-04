@@ -1,6 +1,7 @@
 "use server"
 
 import { getUserToken } from "@/lib/auth";
+import { ShippDAtaI } from "@/types/cart.type";
 
 
 export async function addProductCart(productId :string) {
@@ -39,7 +40,7 @@ export async function getCart() {
          }
         })
         const data = await response.json();
-        return data;
+        return data;    
     }
 
 
@@ -91,6 +92,26 @@ export async function clearCart() {
 
     const response = await fetch("https://ecommerce.routemisr.com/api/v2/cart", {
         method: "DELETE",
+        headers: { 
+            token : token as string,
+            "Content-Type": "application/json",
+         }
+        })
+        const data = await response.json();
+        return data;
+    }
+
+export async function cashCheckOut(cartData : ShippDAtaI,cartId :string) {
+    
+    const token = await getUserToken();
+
+    if(!token){
+        throw new Error("User not authenticated");
+    }
+
+    const response = await fetch(`https://ecommerce.routemisr.com/api/v2/orders/${cartId}`, {
+        method: "POST",
+        body: JSON.stringify({ cartData }),
         headers: { 
             token : token as string,
             "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 "use client";
 import {
+  Badge,
   ChevronDown,
   Gift,
   Headset,
@@ -15,7 +16,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 import logo from "@/assets/freshcart-logo.svg";
 import Link from "next/link";
 import { NavigationMenuItem } from "@/components/ui/navigation-menu";
@@ -37,12 +38,15 @@ import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { CartContext } from "@/provider/cart-provider";
+import { Spinner } from "../ui/spinner";
+import { WishListContext } from "@/provider/wish-provider";
 
 export default function Navbar() {
-  const cartCount = useSelector((state: RootState) => state.cart.cartCount);
   const [categories, setCategories] = useState([]);
   const { data: session, status } = useSession();
+  const {noOfCartItems,isLoading} = useContext(CartContext);
+  const {noOfItems,isLoder} = useContext(WishListContext);
 
   useEffect(() => {
     fetch("https://ecommerce.routemisr.com/api/v1/categories")
@@ -210,23 +214,29 @@ export default function Navbar() {
                 <p className="text-sm text-gray-500">Support</p>
                 <p className="text-sm text-gray-800">24/7 Help</p>
               </div>
-              <div className="border-l h-10 ml-3 border-gray-400"></div>
+              
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <div className="icons flex ">
-              <Link href="/wishlist">
+            {session &&
+            
+             <div className="icons flex mr-4">
+              <div className="border-l h-10 ml-3 border-gray-400"></div>
+              <Link href="/wishlist" className="relative mx-2 ">
                 <Heart className="w-10 h-10 p-2 text-red-600  rounded-full cursor-pointer hover:text-red-500 hover:bg-gray-100" />
+                <span className="absolute bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center start-full bottom-full -translate-x-1/2 translate-y-1/2">
+                  {isLoder ? <Spinner/> : noOfItems }
+                </span> 
               </Link>
-              <Link href="/cart" className="relative mr-2">
-                <ShoppingCart className="w-10 h-10 p-2 text-gray-600 ..." />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
+
+               <Link href="/cart" className="relative group mr-2 cursor-pointer group">
+                <ShoppingCart className="w-10 h-10 p-2 text-gray-600 group-hover:bg-gray-100 rounded-2xl transition duration-200" />
+                <span className="absolute bg-green-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center start-full bottom-full -translate-x-1/2 translate-y-1/2">
+                  {isLoading ? <Spinner/> : noOfCartItems }
+                </span>         
               </Link>
-            </div>
+            </div>}
+            
             {session ? (
               <Button
                 onClick={() => signOut({ callbackUrl: "/login" })}

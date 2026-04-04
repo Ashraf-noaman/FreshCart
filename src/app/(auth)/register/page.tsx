@@ -32,6 +32,7 @@ export default function Register() {
       password: "",
       rePassword: "",
       phone: "",
+      terms: false,
     },
   });
   async function handelRegister(data: registerTypeSchema) {
@@ -225,7 +226,6 @@ export default function Register() {
                       </button>
                     </div>
 
-                    {/* 🔥 رجع المؤشر هنا */}
                     <div className="mt-2">
                       <div className="flex gap-1">
                         {[1, 2, 3, 4].map((level) => (
@@ -285,7 +285,6 @@ export default function Register() {
           focus-visible:border-green-500 focus-visible:ring-0 pr-10"
                       />
 
-                      {/* 👁️ Eye Icon */}
                       <button
                         type="button"
                         onClick={() => setShowConfirm(!showConfirm)}
@@ -323,7 +322,7 @@ export default function Register() {
                   </Field>
                 )}
               />
-              <Field orientation="horizontal">
+              {/* <Field orientation="horizontal">
                 <Checkbox
                   id="terms-checkbox"
                   className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
@@ -341,8 +340,33 @@ export default function Register() {
                     </Link>
                   </div>
                 </Label>
-              </Field>
+              </Field> */}
+              <Controller
+                name="terms"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field
+                    orientation="horizontal"
+                    data-invalid={fieldState.invalid}
+                  >
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                    />
+
+                    <Label>I agree to Terms & Privacy Policy</Label>
+
+                    {fieldState.error && (
+                      <p className="text-red-500 text-sm">
+                        {fieldState.error.message}
+                      </p>
+                    )}
+                  </Field>
+                )}
+              />
               <Button
+                disabled={!form.watch("terms")}
                 className="bg-green-600 text-white cursor-pointer flex items-center justify-center gap-3 w-full px-4 py-2 border rounded-lg shadow-sm hover:bg-green-700 transition"
                 type="submit"
               >

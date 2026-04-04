@@ -4,11 +4,11 @@ import * as React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import homeSlide from "@/assets/home-slider-1.png"
-
+import Image from "next/image";
+import 'swiper/swiper-bundle.css';
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Image from "next/image";
 import { Button } from "../ui/button";
 import { Headset, RotateCw, ShieldBan, Truck } from "lucide-react";
 

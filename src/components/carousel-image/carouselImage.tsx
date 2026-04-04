@@ -1,11 +1,10 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Thumbs, Swiper as SwiperClass } from "swiper/modules";
-import { useState } from "react";
 
-import "swiper/css";
-import "swiper/css/thumbs";
+import { useState } from "react";
+import { Thumbs } from "swiper/modules";
+import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
+
 
 type Props = {
   images: string[];

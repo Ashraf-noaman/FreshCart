@@ -1,23 +1,21 @@
 "use client";
-import { ArrowLeft, Minus, Plus, Trash2 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Trash2 } from "lucide-react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { CartProductI } from "@/types/cart.type";
-import QuantitySelector from "../QuantitySelector/QuantitySelector";
 import {
   removeProductFromCart,
   updateProductInCart,
 } from "@/actions/cart.action";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
-import { error } from "console";
 import { Button } from "../ui/button";
-import { set } from "zod";
+import { CartContext } from "@/provider/cart-provider";
 
 
 
 export default function CartItem({product,setProducts} : {product: CartProductI,setProducts: (products: CartProductI[]) => void}) {
+  const {getCartData} = useContext(CartContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingUpdateInc, setIsLoadingUpdateInc] = useState(false);
   const [isLoadingUpdateDec, setIsLoadingUpdateDec] = useState(false);
@@ -29,6 +27,7 @@ export default function CartItem({product,setProducts} : {product: CartProductI,
       const response = await removeProductFromCart(prodId);
       toast.success(response.message);
       setProducts(response.data.products);
+      getCartData();
     } catch (error) {
       toast.error((error as Error).message);
     } finally {
@@ -44,7 +43,8 @@ export default function CartItem({product,setProducts} : {product: CartProductI,
       }
       const response = await updateProductInCart(prodId, count);
       toast.success(response.message);
-      setProducts(response.data.products);      
+      setProducts(response.data.products);  
+      getCartData();    
     } catch (error) {
       toast.error((error as Error).message);
     }finally {
@@ -59,7 +59,6 @@ export default function CartItem({product,setProducts} : {product: CartProductI,
 
   return (
     <>
-   
     <div className="flex-col">
       <div className="flex-1 flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row gap-4 p-5 bg-white rounded-2xl border border-gray-100 shadow-sm">
@@ -107,7 +106,7 @@ export default function CartItem({product,setProducts} : {product: CartProductI,
                 {/* Stock badge */}
 
                 <span className="text-green-600 font-bold text-base">
-                  {product.price} EGP
+                  {product.price * product.count} EGP
                 </span>
                 <span className="text-gray-400 text-sm">per unit</span>
               </div>

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
+import GetWishlist from "@/components/wishlist/getwishlist";
 
-export default function WishList() {
+
+export default function Wishlist() {
   return (
-    <div>
-      WishList
-    </div>
-  )
+      <GetWishlist />
+  );
 }

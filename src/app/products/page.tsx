@@ -11,17 +11,14 @@ import Image from 'next/image';
 import { Eye, Heart, PackageOpen, RefreshCw, Star } from 'lucide-react';
 import Link from 'next/link';
 import AddToCartBtn from '@/components/cart/addToCartBtn';
+import { getAllProducts } from '@/services/product.services';
+import AddToWishlist from '@/components/wishlist/addToWishlist';
 
 
-const baseUrl = process.env.BASE_URL
 
 export default async function Products() {
-  const response = await fetch(`${baseUrl}/products`,
-  {
-    method:"GET",
-  })
-  const data = await response.json();
-  const products : productI[] = data.data
+  const response = await getAllProducts();
+  const products : productI[] = response.data
 
  
   
@@ -75,7 +72,7 @@ export default async function Products() {
                       <AddToCartBtn productId={product._id} />
                     </CardContent>
                     <div className=' absolute gap-2 flex-col right-4 top-4'>
-                      <Heart className='text-gary-500 rounded-3xl w-7 h-7 p-2 lg:w-10 lg:h-10 lg:p-3 bg-gray-100 hover:bg-gray-200 hover:text-red-600 cursor-pointer' />
+                      <AddToWishlist prodId={product._id} />
                       <RefreshCw className='text-gary-500 my-4 rounded-3xl w-7 h-7 p-2 lg:w-10 lg:h-10 lg:p-3 bg-gray-100 hover:bg-gray-200 hover:text-green-600 cursor-pointer' />
                       <Link href={`/products/${product._id}`}>
                           <Eye className='text-gary-500 rounded-3xl w-7 h-7 p-2 lg:w-10 lg:h-10 lg:p-3 bg-gray-100 hover:bg-gray-200 hover:text-green-600 cursor-pointer' />

@@ -10,32 +10,30 @@ import {
   RotateCw,
   ShieldBan,
 } from "lucide-react";
-import homeSlide from "@/assets/home-slider-1.png";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import QuantitySelector from "@/components/QuantitySelector/QuantitySelector";
 import { clearCart, getCart } from "@/actions/cart.action";
 import { CartI, CartProductI } from "@/types/cart.type";
 import CartItem from "./../../components/cart/cart-item";
 import { Spinner } from "@/components/ui/spinner";
 import { useDispatch } from "react-redux";
-import { setCartCount } from "@/components/store/cartSlice";
 import { Button } from "@/components/ui/button";
 import EmptyCartPage from "@/components/cart/EmptyCart";
+import { CartContext } from "@/provider/cart-provider";
+import { CartCheckout } from "@/components/cart/cart-checkout";
 export default function Cart() {
-
+    const {getCartData,totalCartPrice,noOfCartItems} = useContext(CartContext);
+  
   const [products, setProducts] = useState<CartProductI[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
-  const dispatch = useDispatch();
+  
   async function getAllProductCart() {
     try {
       setIsLoading(true);
       const response: CartI = await getCart();
-      console.log(response);
       setProducts(response.data.products);
-      dispatch(setCartCount(response.data.products.length));
+
     } catch (error) {
       console.log("Error fetching cart:", error);
     }finally {
@@ -49,7 +47,7 @@ export default function Cart() {
       const response = await clearCart();
       console.log(response);
       setProducts(response.data.products);
-      dispatch(setCartCount(0));
+      getCartData();
     } catch (error) {
       console.log("Error clearing cart:", error);
     }finally {
@@ -81,7 +79,6 @@ export default function Cart() {
   if(products.length === 0) {
     return (
       <>
-        
         <EmptyCartPage />
       </>
     )
@@ -145,7 +142,7 @@ export default function Cart() {
                     <Lock size={16} />
                     <h2 className="font-bold text-lg">Order Summary</h2>
                   </div>
-                  <p className="text-green-100 text-sm">{products.length} items</p>
+                  <p className="text-green-100 text-sm">{noOfCartItems} items</p>
                 </div>
 
                 <div className="bg-white p-5 flex flex-col gap-4">
@@ -153,7 +150,7 @@ export default function Cart() {
                   <div className="flex flex-col gap-2 text-sm">
                     <div className="flex justify-between">
                       <span>Subtotal</span>
-                      <span>{products.reduce((total, product) => total + (product.count * product.price), 0)} EGP</span>
+                      <span>{totalCartPrice} EGP</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Free Shipping</span>
@@ -162,7 +159,7 @@ export default function Cart() {
                     <div className="border-t my-2" />
                     <div className="flex justify-between font-bold">
                       <span>Total</span>
-                      <span>{products.reduce((total, product) => total + (product.count * product.price), 0)} EGP</span>
+                      <span>{totalCartPrice} EGP</span>
                     </div>
                   </div>
 
@@ -181,14 +178,8 @@ export default function Cart() {
                     </button>
                   </div>
 
-                  {/* Checkout */}
-                  <Link
-                    href="/checkout"
-                    className="flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl font-semibold"
-                  >
-                    <Lock size={16} /> Checkout
-                  </Link>
-
+                  <CartCheckout  />
+                  
                   {/* Footer */}
                   <div className="text-xs text-center text-gray-400 flex justify-center gap-2">
                     <span className="flex items-center gap-1">
