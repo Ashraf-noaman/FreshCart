@@ -39,11 +39,11 @@ export default async function ShopByCategory() {
           Shop by <span className="text-green-700">Category</span>
         </h2>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 ml-8 mb-8">
+      <div className=" grid grid-cols-2 px-2 lg:px-0 md:grid-cols-3 lg:grid-cols-5 gap-5 lg:ml-8 mb-8">
         {categories.map((category) => (
           <div
             key={category._id}
-            className="bg-white transition duration-300 hover:shadow-lg shadow rounded-lg w-60 h-40 flex flex-col gap-2 items-center justify-center cursor-pointer"
+            className="bg-white transition duration-300 hover:shadow-lg shadow rounded-lg w-45 h-40 lg:w-60 lg:h-40 flex flex-col gap-2 items-center justify-center cursor-pointer"
           >
             <div className="w-20 h-20 rounded-full overflow-hidden">
               <Link href={`categories/${category._id}`}>
