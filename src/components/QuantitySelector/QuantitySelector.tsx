@@ -177,6 +177,8 @@ async function handleAddToCart() {
         </Button>
       </div>
 
+     
+
       <div className="grid lg:grid-cols-3 mt-6 lg:gap-15 gap-y-5 lg:gap-y-0">
         <div className="shipping flex items-center gap-3">
           <Truck className="text-green-600 bg-green-100 rounded-full w-10 h-10 p-2" />

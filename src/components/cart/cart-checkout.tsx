@@ -48,7 +48,7 @@ async function handelCheckOut (data: { shippingAddress: ShippDAtaI }) {
       const response = await cashCheckOut(data.shippingAddress, cartId);
       getCartData();
       toast.success(response.message);
-      router.push("/");
+      router.push("/orders");
       
     }catch(error){
       toast.error((error as Error).message || "An error occurred during checkout");

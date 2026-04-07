@@ -62,7 +62,7 @@ export default async function ProductDetails({
         </Breadcrumb>
       </div>
       <div className="container lg:flex lg:mx-auto py-5 px-5 lg:py-10 lg:px-5 lg:gap-10 mt-3">
-        <div className="w-full lg:w-1/4 border-gray-200 border-1 rounded-xl h-full">
+        <div className="w-full lg:w-1/4 rounded-xl h-full">
           <ImageGallery images={product.images} />
         </div>
         <div className="mt-6 lg:mt-0 w-full lg:w-3/4 shadow-sm p-5 lg:p-10 rounded-xl border-gray-200 border-1 ">
@@ -133,13 +133,15 @@ export default async function ProductDetails({
           {relatedProducts?.map((product) => (
             <React.Fragment key={product._id}>
               <Card className=" relative transform hover:-translate-y-2 transition hover:shadow-lg">
-                <Image
-                  src={product.imageCover}
-                  className="w-40 h-40 lg:w-50 object-contain lg:h-60 mx-auto"
-                  width={1000}
-                  height={1000}
-                  alt="product "
-                />
+                <Link href={`/products/${product._id}`}>
+                  <Image
+                    src={product.imageCover}
+                    className="w-40 h-40 lg:w-50 object-contain lg:h-60 mx-auto"
+                    width={1000}
+                    height={1000}
+                    alt="product "
+                  />
+                </Link>
                 <CardHeader>
                   <div className="card-brand text-gray-600 text-sm">
                     {product.brand.name}
@@ -179,9 +181,8 @@ export default async function ProductDetails({
                 </CardContent>
                 <div className=" absolute gap-2 flex-col right-4 top-4">
                   <AddToWishlist prodId={product._id} />
-                  <RefreshCw className="text-gary-500 my-4 rounded-3xl w-7 h-7 p-2 lg:w-10 lg:h-10 lg:p-3 bg-gray-100 hover:bg-gray-200 hover:text-green-600 cursor-pointer" />
                   <Link href={`/products/${product._id}`}>
-                    <Eye className="text-gary-500 rounded-3xl w-7 h-7 p-2 lg:w-10 lg:h-10 lg:p-3 bg-gray-100 hover:bg-gray-200 hover:text-green-600 cursor-pointer" />
+                    <Eye className="mt-2 text-gary-500 rounded-3xl w-7 h-7 p-2 lg:w-10 lg:h-10 lg:p-3 bg-gray-100 hover:bg-gray-200 hover:text-green-600 cursor-pointer" />
                   </Link>
                 </div>
               </Card>

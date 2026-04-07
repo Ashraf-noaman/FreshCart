@@ -86,7 +86,7 @@ export default function Cart() {
   }
   return (
     <>
-      <main className="min-h-screen bg-gray-50">
+      <main className="lg:min-h-screen w-full bg-gray-50">
         <div className="flex-col w-full items-center mx-auto px-8 py-8">
           {/* Breadcrumb */}
           <nav className="text-sm text-gray-400 mb-6">
@@ -96,7 +96,6 @@ export default function Cart() {
             <span className="mx-2">/</span>
             <span className="text-gray-600 font-medium">Shopping Cart</span>
           </nav>
-
           {/* Heading */}
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
@@ -110,7 +109,7 @@ export default function Cart() {
             your cart
           </p>
           {/* Layout */}
-          <div className="flex items-top justify-between gap-6">
+          <div className="lg:flex lg:items-top lg:justify-between lg:gap-6">
             {/* Left Side */}
             <div className="w-full lg:flex-1 flex flex-col gap-2">
               {products &&

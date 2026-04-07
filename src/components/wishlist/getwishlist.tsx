@@ -56,8 +56,8 @@ export default function GetWishlist() {
           </div>
         </div>
       </div>
-      <div className="max-w-8xl mx-auto px-4 py-6">
-        <div className="bg-gray-50 rounded-t-3xl  mt-10 grid grid-cols-1 md:grid-cols-12 gap-4 p-4 md:px-6 md:py-5 items-center">
+      <div className="max-w-8xl mx-auto px-4 py-6 ">
+        <div className="bg-gray-50 rounded-t-3xl hidden mt-10 lg:grid grid-cols-1 md:grid-cols-12 gap-4 p-4 md:px-6 md:py-5 items-center">
           <div className="md:col-span-6 flex items-center gap-4 text-gray-600">
             Product
           </div>

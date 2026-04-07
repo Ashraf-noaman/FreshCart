@@ -132,7 +132,7 @@ export default function Navbar() {
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 p-2  text-white bg-green-600 rounded-full cursor-pointer hover:bg-green-700" />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-10">
+          <div className="flex items-center justify-between gap-8">
             <div className="hidden lg:flex nav-links  items-center gap-10 mx-3">
               {/* Home */}
               <Link
@@ -207,10 +207,16 @@ export default function Navbar() {
               >
                 Brand
               </Link>
+              <Link
+                href="/orders"
+                className="text-lg bg-transparent focus:bg-transparent text-gray-600 hover:text-green-600 hover:bg-transparent cursor-pointer"
+              >
+                Orders
+              </Link>
             </div>
             <div className="hidden lg:flex support ">
               <Headset className="w-9 h-9 p-2  bg-green-100 text-green-600 rounded-full cursor-pointer hover:text-green-500" />
-              <div className="ml-2 flex-col">
+              <div className="ml-2 flex-col w-20">
                 <p className="text-sm text-gray-500">Support</p>
                 <p className="text-sm text-gray-800">24/7 Help</p>
               </div>
@@ -221,15 +227,15 @@ export default function Navbar() {
             {session &&
             
              <div className="icons flex mr-4">
-              <div className="border-l h-10 ml-3 border-gray-400"></div>
-              <Link href="/wishlist" className="relative mx-2 ">
+              <div className="border-l h-10 ml-3 border-gray-400 hidden lg:block"></div>
+              <Link href="/wishlist" className="relative mx-2 hidden lg:block">
                 <Heart className="w-10 h-10 p-2 text-red-600  rounded-full cursor-pointer hover:text-red-500 hover:bg-gray-100" />
                 <span className="absolute bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center start-full bottom-full -translate-x-1/2 translate-y-1/2">
                   {isLoder ? <Spinner/> : noOfItems }
                 </span> 
               </Link>
 
-               <Link href="/cart" className="relative group mr-2 cursor-pointer group">
+               <Link href="/cart" className="relative group mr-2 cursor-pointer group hidden lg:block">
                 <ShoppingCart className="w-10 h-10 p-2 text-gray-600 group-hover:bg-gray-100 rounded-2xl transition duration-200" />
                 <span className="absolute bg-green-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center start-full bottom-full -translate-x-1/2 translate-y-1/2">
                   {isLoading ? <Spinner/> : noOfCartItems }
@@ -299,6 +305,13 @@ export default function Navbar() {
                   >
                     Brand
                   </Link>
+                  <Link
+                    href="/orders"
+                    className="py-2 text-lg bg-transparent focus:bg-transparent text-gray-600 hover:text-green-600 hover:bg-green-50 px-2 cursor-pointer"
+                  >
+                    Orders
+                  </Link>
+
                 </div>
                 <div className="icons flex flex-col gap-2">
                   <Link

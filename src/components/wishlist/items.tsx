@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
 import { CartContext } from "@/provider/cart-provider";
 import { WishListContext } from "@/provider/wish-provider";
-import { get } from "http";
 
 export default function Items({
   item,
@@ -23,7 +22,7 @@ export default function Items({
   const [isLoading, setIsLoading] = useState(false);
   const [isAddToCartLoading, setIsAddToCartLoading] = useState(false);
   const { getCartData } = useContext(CartContext);
-  const { getWishListData,isLoder } = useContext(WishListContext);
+  const { getWishListData, isLoder } = useContext(WishListContext);
 
   async function removeItem(itemId: string) {
     try {
@@ -55,70 +54,83 @@ export default function Items({
   }
 
   return (
-    <div className="bg-white border border-gray-100 grid grid-cols-1 md:grid-cols-12 gap-4 md:px-6 md:py-5 p-10 items-center">
-      {/* Product */}
-      <div className="md:col-span-6 flex items-center gap-4 text-gray-600">
-        <div className="p-2 w-22 h-22 flex justify-center bg-gray-100 rounded-xl">
-          <Image
-            src={item.imageCover || "/placeholder.png"}
-            className="rounded-xl object-contain"
-            alt={item.title || "Product Image"}
-            width={70}
-            height={65}
-            style={{ width: "auto", height: "auto" }}
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <Link href={`/products/${item._id}`} className="hover:text-green-500">
-            {item.title}
-          </Link>
-          <span className="text-sm text-gray-500">{item.brand?.name || "No Brand"}</span>
-        </div>
-      </div>
+    <div className="bg-white my-5 lg:my-0 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-4 sm:p-5">
 
-      {/* Price */}
-      <div className="md:col-span-2 flex md:justify-center items-center gap-2 text-black">
-        {item.price} EGP
-      </div>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:grid md:grid-cols-12 md:gap-4 md:px-1">
 
-      {/* Status */}
-      <div className="md:col-span-2 text-gray-600">
-        {item.quantity > 0 ? (
-          <div className="flex gap-1 bg-green-100/80 p-1 rounded-lg w-25 items-center justify-center">
-            <ShoppingCart className="text-green-800 size-4" />
-            <span className="text-green-600 text-sm">In Stock</span>
+        <div className="flex items-center gap-3 sm:gap-4 md:col-span-6 min-w-0">
+          <div className="shrink-0 p-2 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-gray-100 rounded-xl">
+            <Image
+              src={item.imageCover || "/placeholder.png"}
+              className="rounded-xl object-contain"
+              alt={item.title || "Product Image"}
+              width={70}
+              height={65}
+              style={{ width: "auto", height: "auto", maxHeight: "100%" }}
+            />
           </div>
-        ) : (
-          <div className="flex gap-1 bg-red-100/80 p-1 rounded-lg w-25 items-center justify-center">
-            <ShoppingCart className="text-red-800 size-4" />
-            <span className="text-red-600 text-sm">Out of Stock</span>
+          <div className="flex flex-col gap-1 min-w-0">
+            <Link
+              href={`/products/${item._id}`}
+              className="hover:text-green-500 text-gray-700 font-medium text-sm sm:text-base leading-snug line-clamp-2 transition-colors"
+            >
+              {item.title}
+            </Link>
+            <span className="text-xs sm:text-sm text-gray-400">
+              {item.brand?.name || "No Brand"}
+            </span>
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Actions */}
-      <div className="md:col-span-2 text-gray-600">
-        <div className="flex gap-2 items-center justify-start">
+        <div className="flex items-center justify-between sm:justify-start sm:gap-6 md:contents">
+
+          <div className="md:col-span-2 md:flex md:justify-center">
+            <span className="text-gray-900 font-semibold text-sm sm:text-base">
+              {item.price}{" "}
+              <span className="text-gray-400 font-normal text-xs">EGP</span>
+            </span>
+          </div>
+
+          <div className="md:col-span-2 md:flex md:justify-center">
+            {item.quantity > 0 ? (
+              <div className="flex gap-1 bg-green-100/80 px-2 py-1 rounded-lg items-center">
+                <ShoppingCart className="text-green-700 size-3.5 sm:size-4 shrink-0" />
+                <span className="text-green-600 text-xs sm:text-sm whitespace-nowrap">
+                  In Stock
+                </span>
+              </div>
+            ) : (
+              <div className="flex gap-1 bg-red-100/80 px-2 py-1 rounded-lg items-center">
+                <ShoppingCart className="text-red-700 size-3.5 sm:size-4 shrink-0" />
+                <span className="text-red-600 text-xs sm:text-sm whitespace-nowrap">
+                  Out of Stock
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="md:col-span-2 flex gap-2 items-center sm:justify-start md:justify-start">
           <Button
             onClick={() => addCartItem(item._id)}
-            className="flex items-center gap-1 bg-gray-300/70 text-black px-3 cursor-pointer py-5 rounded-lg hover:bg-gray-300 transition"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-gray-100 text-black px-3 py-2 h-9 sm:h-10 rounded-lg hover:bg-gray-200 transition cursor-pointer"
           >
-            <Check className="text-green-600 size-4" />
+            <Check className="text-green-600 size-3.5 sm:size-4 shrink-0" />
             {isAddToCartLoading ? (
-              <Spinner className="size-4 text-green-600 w-18" />
+              <Spinner className="size-4 text-green-600" />
             ) : (
-              <span className="text-sm">Add to Cart</span>
+              <span className="text-xs sm:text-sm whitespace-nowrap">Add to Cart</span>
             )}
           </Button>
 
           <Button
             onClick={() => removeItem(item._id)}
-            className="group border border-gray-200 flex items-center gap-1 bg-white px-3 cursor-pointer py-5 rounded-lg hover:bg-red-200 transition"
+            className="group border border-gray-200 flex items-center justify-center bg-white px-3 h-9 sm:h-10 w-9 sm:w-10 rounded-lg hover:bg-red-50 hover:border-red-200 transition cursor-pointer shrink-0"
           >
-            {isLoder ? (
-              <Spinner className="size-4 text-red-600" />
+            {isLoder || isLoading ? (
+              <Spinner className="size-4 text-red-500" />
             ) : (
-              <Trash className="text-gray-600 group-hover:text-red-600 size-4" />
+              <Trash className="text-gray-400 group-hover:text-red-500 size-4 transition-colors" />
             )}
           </Button>
         </div>
