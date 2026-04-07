@@ -6,7 +6,7 @@ export async function getUserToken() {
 
   const decodedToken =
     cookieStore.get("next-auth.session-token")?.value ||
-    cookieStore.get("_Secure-next-auth.session-token")?.value;
+    cookieStore.get("__Secure-next-auth.session-token")?.value;
 
   if (!decodedToken) return null;
 
