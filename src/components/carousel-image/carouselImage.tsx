@@ -54,7 +54,7 @@ export default function ImageGallery({ images }: Props) {
       </Swiper> 
     </div>
     <div className="mt-5 p-5 rounded-xl shadow-lg  border-gray-200 border-1 ">
-      <CustomerReviews average={4.4} totalRatings={20752} />
+      <CustomerReviews />
     </div>
    </>
 

@@ -18,6 +18,7 @@ type ApiResponse = {
   data: Review[];
 };
 
+
 function StarIcon({ filled, half }: { filled: boolean; half?: boolean }) {
   return (
     <svg width="16" height="16" viewBox="0 0 20 20">

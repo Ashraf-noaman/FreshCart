@@ -45,8 +45,9 @@ export default async function Products() {
           <div className="grid mb-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:px-10 gap-5 px-4 cursor-pointer">
             {products.map((product) => (
               <React.Fragment key={product._id}>
-                <Link href={`/products/${product._id}`}>
+                
                   <Card className=" relative transform hover:-translate-y-2 transition hover:shadow-lg">
+                    <Link href={`/products/${product._id}`}>
                     <Image
                       src={product.imageCover}
                       className="w-40 h-40 lg:w-50 object-contain lg:h-60 mx-auto"
@@ -54,6 +55,7 @@ export default async function Products() {
                       height={1000}
                       alt="product "
                     />
+                    </Link>
                     <CardHeader>
                       <div className="card-brand text-gray-600 text-sm">
                         {product.brand.name}
@@ -98,7 +100,6 @@ export default async function Products() {
                       </Link>
                     </div>
                   </Card>
-                </Link>
               </React.Fragment>
             ))}
           </div>
